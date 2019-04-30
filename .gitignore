@@ -307,4 +307,5 @@ pip-selfcheck.json
 # Ignore all local history of files
 .history
 
+*mp3
 # End of https://www.gitignore.io/api/pydev,linux,python,pycharm,virtualenv,pycharm+all,visualstudiocode
