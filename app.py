@@ -55,7 +55,7 @@ class MainWindows(QMainWindow, Ui_MainWindow):
 
         self.btnAdd.clicked.connect(self.add_folder_to_list)
         # double click (itemActivated)
-        # self.listView.itemActivated.connect(self.play_from_playlist)
+        # self.tableView.itemActivated.connect(self.play_from_playlist)
         # itemClicked es con un solo click
         # self.listWidget.itemClicked.connect(self.stop_song)
 
@@ -68,7 +68,7 @@ class MainWindows(QMainWindow, Ui_MainWindow):
             self.listModel.refresh()
         else:
             # Crear un cartel que no deje agregar archivos no mp3
-            print("Archivo no mp3")
+              print("Archivo no mp3")
 
     def remove_from_list(self):
         self.listWidget.takeItem(self.listWidget.currentRow())
@@ -89,7 +89,6 @@ class MainWindows(QMainWindow, Ui_MainWindow):
     def play_from_playlist(self):
         row = self.listWidget.currentRow()
         file = self.listWidget.item(row).text()
-        # play_pause(file)
 
 
 if __name__ == "__main__":
