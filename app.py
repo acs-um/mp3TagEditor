@@ -1,6 +1,8 @@
 import os
+import eyed3
 
 from PyQt5.QtWidgets import QMainWindow, QApplication, QFileDialog, QHeaderView
+from PyQt5.QtGui import QIcon, QPixmap
 from Source.mainWindows import Ui_MainWindow
 from Source.table_models import ListFileModel, ListFile
 
@@ -12,6 +14,7 @@ class MainWindows(QMainWindow, Ui_MainWindow):
     def __init__(self, *args, **kwargs):  # Constructor de la clase
         QMainWindow.__init__(self, *args, **kwargs)
         self.setupUi(self)
+        self.loadInfo("/home/nati/Escritorio/03 Imagine Dragons - It's Time.mp3")
         self.itemsList = []
         self.listModel = ListFileModel(self.itemsList, parent=self)
         self.tableView.setModel(self.listModel)
@@ -51,6 +54,38 @@ class MainWindows(QMainWindow, Ui_MainWindow):
         index = self.tableView.selectedIndexes()[0]
         file = self.listModel.get_path(index)
         # play_pause(file)
+
+    def loadInfo(self, file):
+        audiofile = eyed3.load(file)
+        audio = audiofile.tag
+
+        self.titleEdit.setText(audio.title)
+        self.artistEdit.setText(audio.artist)
+        self.albumEdit.setText(audio.album)
+
+        r_year = audio.recording_date.year
+        if r_year != None:
+            formatYear = "{}".format(r_year)
+            self.yearEdit.setText(formatYear)
+        else:
+            self.yearEdit.setText('')
+
+        formatTrack = "{}/{}".format(audio.track_num[0],audio.track_num[1])
+        self.trackEdit.setText(formatTrack)
+
+        formatGenre = "{}".format(audio.genre)
+        genre = formatGenre.split(")")[-1:][0]
+        self.genreEdit.setText(genre)
+
+        self.composerEdit.setText(audio.composer)
+
+        comment = audio.comments.get('description')
+        if comment:
+            self.commentEdit.setText(comment)
+
+        img_b = audio.images.get('').data
+        print(img_b)
+
 
 
 if __name__ == "__main__":
