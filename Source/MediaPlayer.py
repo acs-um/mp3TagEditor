@@ -25,6 +25,12 @@ class MediaPlayer(QtWidgets.QMainWindow):
             self.mediaplayer.play()
             self.is_paused = False
 
+    def stop(self):
+        self.mediaplayer.stop()
+
+    def set_volume(self, volume):
+        self.mediaplayer.audio_set_volume(volume)
+
     def open_file(self, path):
         if not path:
             dialog_txt = "Elija el archivo a reproducir"
