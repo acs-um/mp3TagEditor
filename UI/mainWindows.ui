@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>800</width>
-    <height>586</height>
+    <height>603</height>
    </rect>
   </property>
   <property name="maximumSize">
@@ -197,7 +197,7 @@
      </size>
     </property>
    </widget>
-   <widget class="QListWidget" name="listWidget">
+   <widget class="QTableView" name="tableView">
     <property name="geometry">
      <rect>
       <x>500</x>
@@ -226,14 +226,17 @@
       <x>20</x>
       <y>180</y>
       <width>141</width>
-      <height>121</height>
+      <height>141</height>
      </rect>
     </property>
     <property name="text">
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>../../../../../Imágenes/China_Jiuzhaigou_park_Parks_Lake_Mountains_Autumn_530368_1366x768.jpg</pixmap>
+     <pixmap resource="images.qrc">:/iconos/images/default_cover.png</pixmap>
+    </property>
+    <property name="scaledContents">
+     <bool>true</bool>
     </property>
    </widget>
    <widget class="QLineEdit" name="titleEdit">
@@ -482,6 +485,19 @@
      <enum>Qt::Horizontal</enum>
     </property>
    </widget>
+   <widget class="QPushButton" name="btnAdd">
+    <property name="geometry">
+     <rect>
+      <x>690</x>
+      <y>140</y>
+      <width>87</width>
+      <height>29</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Agregar</string>
+    </property>
+   </widget>
    <zorder>btnPrev</zorder>
    <zorder>btnPlay</zorder>
    <zorder>btnNext</zorder>
@@ -491,7 +507,7 @@
    <zorder>lcdDuration</zorder>
    <zorder>progressTimeBar</zorder>
    <zorder>btnVolume</zorder>
-   <zorder>listWidget</zorder>
+   <zorder>tableView</zorder>
    <zorder>imgCover</zorder>
    <zorder>titleEdit</zorder>
    <zorder>artistEdit</zorder>
@@ -514,6 +530,7 @@
    <zorder>lblTrack</zorder>
    <zorder>btnStop</zorder>
    <zorder>volumeSlider</zorder>
+   <zorder>btnAdd</zorder>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
