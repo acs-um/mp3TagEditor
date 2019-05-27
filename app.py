@@ -20,8 +20,7 @@ class MainWindows(QMainWindow, Ui_MainWindow):
         self.tableView.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
         self.tableView.doubleClicked.connect(self.play_from_list)
         self.btnAddListMenu.triggered.connect(self.add_to_list)
-        self.btnAdd.setText("Add Dir")
-        self.btnAdd.clicked.connect(self.add_folder_to_list)
+        self.btnAddFolderListMenu.triggered.connect(self.add_folder_to_list)
         self.shortcut = QShortcut(QKeySequence("Delete"), self)
         self.shortcut.activated.connect(self.remove_from_list)
 
