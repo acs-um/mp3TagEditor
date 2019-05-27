@@ -14,7 +14,6 @@ class MainWindows(QMainWindow, Ui_MainWindow):
     def __init__(self, *args, **kwargs):  # Constructor de la clase
         QMainWindow.__init__(self, *args, **kwargs)
         self.setupUi(self)
-        self.loadInfo("/home/nati/Escritorio/03 Imagine Dragons - It's Time.mp3")
         self.itemsList = []
         self.listModel = ListFileModel(self.itemsList, parent=self)
         self.tableView.setModel(self.listModel)
@@ -54,8 +53,9 @@ class MainWindows(QMainWindow, Ui_MainWindow):
         index = self.tableView.selectedIndexes()[0]
         file = self.listModel.get_path(index)
         # play_pause(file)
+        self.load_info(file)
 
-    def loadInfo(self, file):
+    def load_info(self, file):
         audiofile = eyed3.load(file)
         audio = audiofile.tag
 
@@ -64,17 +64,17 @@ class MainWindows(QMainWindow, Ui_MainWindow):
         self.albumEdit.setText(audio.album)
 
         r_year = audio.recording_date.year
-        if r_year != None:
-            formatYear = "{}".format(r_year)
-            self.yearEdit.setText(formatYear)
+        if r_year:
+            format_year = "{}".format(r_year)
+            self.yearEdit.setText(format_year)
         else:
             self.yearEdit.setText('')
 
-        formatTrack = "{}/{}".format(audio.track_num[0],audio.track_num[1])
-        self.trackEdit.setText(formatTrack)
+        format_track = "{}/{}".format(audio.track_num[0],audio.track_num[1])
+        self.trackEdit.setText(format_track)
 
-        formatGenre = "{}".format(audio.genre)
-        genre = formatGenre.split(")")[-1:][0]
+        format_genre = "{}".format(audio.genre)
+        genre = format_genre.split(")")[-1:][0]
         self.genreEdit.setText(genre)
 
         self.composerEdit.setText(audio.composer)
@@ -84,8 +84,6 @@ class MainWindows(QMainWindow, Ui_MainWindow):
             self.commentEdit.setText(comment)
 
         img_b = audio.images.get('').data
-        print(img_b)
-
 
 
 if __name__ == "__main__":
