@@ -37,8 +37,23 @@ class ListFileModel(QAbstractTableModel):
     def headerData(self, p_int, Qt_Orientation, role=None):
         return QVariant('Nombre')
 
+    def delete(self, QModelIndex):
+        self.items.pop(QModelIndex.row())
+        self.refresh()
+
 
 class ListFile:
     def __init__(self, path):
         self.path = path
         self.name = path.split("/")[-1:][0]
+
+    def __str__(self):
+        return self.name
+
+    def __eq__(self, other):
+        if other.name > self.name:
+            return 1
+        if other.name < self.name:
+            return -1
+        else:
+            return 0

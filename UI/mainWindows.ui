@@ -485,19 +485,6 @@
      <enum>Qt::Horizontal</enum>
     </property>
    </widget>
-   <widget class="QPushButton" name="btnAdd">
-    <property name="geometry">
-     <rect>
-      <x>690</x>
-      <y>140</y>
-      <width>87</width>
-      <height>29</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Agregar</string>
-    </property>
-   </widget>
    <zorder>btnPrev</zorder>
    <zorder>btnPlay</zorder>
    <zorder>btnNext</zorder>
@@ -530,7 +517,6 @@
    <zorder>lblTrack</zorder>
    <zorder>btnStop</zorder>
    <zorder>volumeSlider</zorder>
-   <zorder>btnAdd</zorder>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
@@ -546,6 +532,7 @@
      <string>Archivo</string>
     </property>
     <addaction name="btnAddListMenu"/>
+    <addaction name="btnAddFolderListMenu"/>
     <addaction name="separator"/>
     <addaction name="actionSalir"/>
    </widget>
@@ -571,6 +558,11 @@
   <action name="actionPlay">
    <property name="text">
     <string>Play</string>
+   </property>
+  </action>
+  <action name="btnAddFolderListMenu">
+   <property name="text">
+    <string>Agregar carpeta</string>
    </property>
   </action>
  </widget>
