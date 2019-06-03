@@ -1,13 +1,12 @@
 import os
 import eyed3
+import io
 
 from PyQt5.QtWidgets import QMainWindow, QApplication, QFileDialog, QHeaderView, QShortcut
 from PyQt5.QtGui import QPixmap, QKeySequence
-from PyQt5 import QtGui
 from Source.mainWindows import Ui_MainWindow
 from Source.table_models import ListFileModel, ListFile
 from PIL import Image, ImageQt
-import io
 
 AUDIO_PATH = os.path.expanduser('~')
 
@@ -99,7 +98,7 @@ class MainWindows(QMainWindow, Ui_MainWindow):
             pixmap = QPixmap.fromImage(q_img)
             self.imgCover.setPixmap(pixmap)
         else:
-            self.imgCover.setPixmap(QtGui.QPixmap(":/iconos/images/default_cover.png"))
+            self.imgCover.setPixmap(QPixmap(":/iconos/images/default_cover.png"))
 
 
 if __name__ == "__main__":
