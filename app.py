@@ -1,8 +1,8 @@
 import os
 import eyed3
 
-from PyQt5.QtWidgets import QMainWindow, QApplication, QFileDialog, QHeaderView
-from PyQt5.QtGui import QPixmap
+from PyQt5.QtWidgets import QMainWindow, QApplication, QFileDialog, QHeaderView, QShortcut
+from PyQt5.QtGui import QPixmap, QKeySequence
 from PyQt5 import QtGui
 from Source.mainWindows import Ui_MainWindow
 from Source.table_models import ListFileModel, ListFile
@@ -23,8 +23,9 @@ class MainWindows(QMainWindow, Ui_MainWindow):
         self.tableView.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
         self.tableView.doubleClicked.connect(self.play_from_list)
         self.btnAddListMenu.triggered.connect(self.add_to_list)
-        self.btnAdd.setText("Add Dir")
-        self.btnAdd.clicked.connect(self.add_folder_to_list)
+        self.btnAddFolderListMenu.triggered.connect(self.add_folder_to_list)
+        self.shortcut = QShortcut(QKeySequence("Delete"), self)
+        self.shortcut.activated.connect(self.remove_from_list)
 
     def add_to_list(self):
         dialog_txt = "Choose mp3 file"
@@ -36,7 +37,9 @@ class MainWindows(QMainWindow, Ui_MainWindow):
             self.listModel.refresh()
 
     def remove_from_list(self):
-        pass
+        if self.tableView.selectedIndexes():
+            index = self.tableView.selectedIndexes()[0]
+            self.listModel.delete(index)
 
     def add_folder_to_list(self):
         dialog_txt = "Choose folder"
