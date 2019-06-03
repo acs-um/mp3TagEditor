@@ -9,6 +9,7 @@ pytest-qt = "*"
 
 [packages]
 pyqt5 = "*"
+python-vlc = "*"
 eyed3 = "*"
 pillow = "*"
 

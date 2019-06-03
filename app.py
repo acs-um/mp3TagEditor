@@ -1,3 +1,8 @@
+from PyQt5 import QtWidgets
+
+from Source.MediaPlayer import MediaPlayer
+from Source.mainWindows import Ui_MainWindow
+import sys
 import os
 import eyed3
 import io
@@ -11,11 +16,18 @@ from PIL import Image, ImageQt
 AUDIO_PATH = os.path.expanduser('~')
 
 
-class MainWindows(QMainWindow, Ui_MainWindow):
+class MainWindows(QtWidgets.QMainWindow, Ui_MainWindow):
 
-    def __init__(self, *args, **kwargs):  # Constructor de la clase
-        QMainWindow.__init__(self, *args, **kwargs)
+    def __init__(self, *args, **kwargs):
+        QtWidgets.QMainWindow.__init__(self, *args, **kwargs)
         self.setupUi(self)
+        self.volume = 80
+        self.mediaPlayer = MediaPlayer()
+        self.mediaPlayer.set_volume(self.volume)
+        self.volumeSlider.setValue(self.volume)
+        self.volumeSlider.valueChanged.connect(self.mediaPlayer.set_volume)
+        self.btnPlay.clicked.connect(self.mediaPlayer.play_pause)
+        self.btnStop.clicked.connect(self.mediaPlayer.stop)
         self.itemsList = []
         self.listModel = ListFileModel(self.itemsList, parent=self)
         self.tableView.setModel(self.listModel)
@@ -102,7 +114,7 @@ class MainWindows(QMainWindow, Ui_MainWindow):
 
 
 if __name__ == "__main__":
-    app = QApplication([])
+    app = QtWidgets.QApplication(sys.argv)
     windows = MainWindows()
     windows.show()
-    app.exec_()
+    sys.exit(app.exec_())
