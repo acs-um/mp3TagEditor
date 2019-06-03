@@ -6,7 +6,8 @@ from PyQt5.QtGui import QIcon, QPixmap, QKeySequence
 from Source.mainWindows import Ui_MainWindow
 from Source.table_models import ListFileModel, ListFile
 
-AUDIO_PATH = os.path.expanduser('~')
+# AUDIO_PATH = os.path.expanduser('~')
+AUDIO_PATH = os.path.expanduser('/home/matias/Música/DOOM OST')
 
 
 class MainWindows(QMainWindow, Ui_MainWindow):
@@ -26,7 +27,7 @@ class MainWindows(QMainWindow, Ui_MainWindow):
 
     def add_to_list(self):
         dialog_txt = "Choose mp3 file"
-        options = "All Files (*);;mp3 Files (*.mp3)"
+        options = "mp3 Files (*.mp3)"
         path = QFileDialog.getOpenFileName(self, dialog_txt, AUDIO_PATH, options)
         if path[0].endswith('mp3'):
             list_file = ListFile(path[0])
@@ -49,6 +50,7 @@ class MainWindows(QMainWindow, Ui_MainWindow):
                     path = os.path.join(folder, file)
                     list_file = ListFile(path)
                     items.append(list_file)
+                    items.sort(key=lambda x: x.name)
             self.listModel.items.extend(items)
             self.listModel.refresh()
 
