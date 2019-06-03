@@ -20,15 +20,18 @@ class MainWindows(QMainWindow, Ui_MainWindow):
         self.tableView.setModel(self.listModel)
         self.tableView.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
         self.tableView.doubleClicked.connect(self.play_from_list)
-        self.btnAddListMenu.triggered.connect(self.add_to_list)
+        self.btnAddListMenu.triggered.connect(self.add_to_list_action)
         self.btnAddFolderListMenu.triggered.connect(self.add_folder_to_list)
         self.shortcut = QShortcut(QKeySequence("Delete"), self)
         self.shortcut.activated.connect(self.remove_from_list)
 
-    def add_to_list(self):
+    def add_to_list_action(self):
         dialog_txt = "Choose mp3 file"
         options = "mp3 Files (*.mp3)"
         path = QFileDialog.getOpenFileName(self, dialog_txt, AUDIO_PATH, options)
+        self.add_to_list(path)
+
+    def add_to_list(self, path):
         if path[0].endswith('mp3'):
             list_file = ListFile(path[0])
             self.listModel.items.append(list_file)
@@ -89,6 +92,9 @@ class MainWindows(QMainWindow, Ui_MainWindow):
             self.commentEdit.setText(comment)
 
         img_b = audio.images.get('').data
+
+    def app_exit(self):
+        exit()
 
 
 if __name__ == "__main__":
