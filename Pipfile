@@ -10,6 +10,7 @@ pytest-qt = "*"
 [packages]
 pyqt5 = "*"
 eyed3 = "*"
+pillow = "*"
 
 [requires]
 python_version = "3.7"
