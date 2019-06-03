@@ -10,6 +10,7 @@ pytest-qt = "*"
 [packages]
 pyqt5 = "*"
 python-vlc = "*"
+eyed3 = "*"
 
 [requires]
 python_version = "3.7"

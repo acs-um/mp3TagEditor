@@ -9,22 +9,22 @@ class MediaPlayer(QtWidgets.QMainWindow):
         self.instance = vlc.Instance()
         self.mediaplayer = self.instance.media_player_new()
         self.is_paused = False
+        self.is_play = False
         self.media = None
         self.path = None
 
     def play_pause(self):
-        if self.mediaplayer.is_playing():
+        if self.is_playing():
             self.mediaplayer.pause()
             self.is_paused = True
-            print("Pausado")
+            self.is_play = False
         else:
             if self.mediaplayer.play() == -1:
                 self.media = self.instance.media_new(self.path)
                 self.mediaplayer.set_media(self.media)
-                # self.media.parse()
                 self.mediaplayer.play()
-                print("Reproduciendo")
             self.is_paused = False
+            self.is_play = True
 
     def stop(self):
         self.mediaplayer.stop()
@@ -39,7 +39,7 @@ class MediaPlayer(QtWidgets.QMainWindow):
         return self.path
 
     def is_playing(self):
-        return self.mediaplayer.is_playing()
+        return self.is_play
 
     def open_file(self, path):
         if not path:
