@@ -11,6 +11,7 @@ pytest-qt = "*"
 pyqt5 = "*"
 python-vlc = "*"
 eyed3 = "*"
+pillow = "*"
 
 [requires]
 python_version = "3.7"

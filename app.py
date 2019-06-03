@@ -5,11 +5,13 @@ from Source.mainWindows import Ui_MainWindow
 import sys
 import os
 import eyed3
+import io
 
 from PyQt5.QtWidgets import QMainWindow, QApplication, QFileDialog, QHeaderView, QShortcut
-from PyQt5.QtGui import QIcon, QPixmap, QKeySequence
+from PyQt5.QtGui import QPixmap, QKeySequence
 from Source.mainWindows import Ui_MainWindow
 from Source.table_models import ListFileModel, ListFile
+from PIL import Image, ImageQt
 
 AUDIO_PATH = os.path.expanduser('~')
 
@@ -78,14 +80,17 @@ class MainWindows(QtWidgets.QMainWindow, Ui_MainWindow):
         self.artistEdit.setText(audio.artist)
         self.albumEdit.setText(audio.album)
 
-        r_year = audio.recording_date.year
-        if r_year:
-            format_year = "{}".format(r_year)
-            self.yearEdit.setText(format_year)
-        else:
+        try:
+            r_year = audio.recording_date.year
+            if r_year:
+                format_year = "{}".format(r_year)
+                self.yearEdit.setText(format_year)
+            else:
+                self.yearEdit.setText('')
+        except AttributeError:
             self.yearEdit.setText('')
 
-        format_track = "{}/{}".format(audio.track_num[0],audio.track_num[1])
+        format_track = "{}/{}".format(audio.track_num[0], audio.track_num[1])
         self.trackEdit.setText(format_track)
 
         format_genre = "{}".format(audio.genre)
@@ -98,7 +103,14 @@ class MainWindows(QtWidgets.QMainWindow, Ui_MainWindow):
         if comment:
             self.commentEdit.setText(comment)
 
-        img_b = audio.images.get('').data
+        img_b = audio.images.get('')
+        if img_b:
+            image = Image.open(io.BytesIO(img_b.image_data))
+            q_img = ImageQt.ImageQt(image)
+            pixmap = QPixmap.fromImage(q_img)
+            self.imgCover.setPixmap(pixmap)
+        else:
+            self.imgCover.setPixmap(QPixmap(":/iconos/images/default_cover.png"))
 
 
 if __name__ == "__main__":
