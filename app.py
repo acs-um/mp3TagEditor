@@ -6,8 +6,7 @@ from PyQt5.QtGui import QIcon, QPixmap, QKeySequence
 from Source.mainWindows import Ui_MainWindow
 from Source.table_models import ListFileModel, ListFile
 
-# AUDIO_PATH = os.path.expanduser('~')
-AUDIO_PATH = os.path.expanduser('/home/matias/Música/DOOM OST')
+AUDIO_PATH = os.path.expanduser('~')
 
 
 class MainWindows(QMainWindow, Ui_MainWindow):
@@ -92,9 +91,6 @@ class MainWindows(QMainWindow, Ui_MainWindow):
             self.commentEdit.setText(comment)
 
         img_b = audio.images.get('').data
-
-    def app_exit(self):
-        exit()
 
 
 if __name__ == "__main__":
