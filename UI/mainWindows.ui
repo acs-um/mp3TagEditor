@@ -377,7 +377,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>PushButton</string>
+     <string>Editar</string>
     </property>
    </widget>
    <widget class="QPushButton" name="btnSave">
@@ -390,7 +390,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>PushButton</string>
+     <string>Guardar</string>
     </property>
    </widget>
    <widget class="QTextEdit" name="commentEdit">
