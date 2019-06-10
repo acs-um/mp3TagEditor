@@ -1,7 +1,6 @@
 from PyQt5 import QtWidgets
 
 from Source.MediaPlayer import MediaPlayer
-from Source.mainWindows import Ui_MainWindow
 import sys
 import os
 import eyed3
