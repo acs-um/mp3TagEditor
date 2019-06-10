@@ -5,7 +5,7 @@ python:
 services:
   - xvfb
 variables:
-    QT_QPA_PLATFORM: "offscreen"
+  - QT_QPA_PLATFORM: "offscreen"
 install:
   - pip install pipenv
   - pipenv install --dev
