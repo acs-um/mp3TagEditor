@@ -1,20 +1,17 @@
-from PyQt5 import QtWidgets
-
-# from Source.MediaPlayer import MediaPlayer
-# from Source.mainWindows import Ui_MainWindow
 import sys
 import os
 import eyed3
 import io
 
-from PyQt5.QtWidgets import QMainWindow, QApplication, QFileDialog, QHeaderView, QShortcut
+from PyQt5.QtWidgets import QFileDialog, QHeaderView, QShortcut
 from PyQt5.QtGui import QPixmap, QKeySequence
+from PyQt5 import QtWidgets
 from Source.mainWindows import Ui_MainWindow
+from Source.MediaPlayer import MediaPlayer
 from Source.table_models import ListFileModel, ListFile
 from PIL import Image, ImageQt
 
 AUDIO_PATH = os.path.expanduser('~/Escritorio')
-# AUDIO_PATH = os.path.expanduser('~')
 
 
 class MainWindows(QtWidgets.QMainWindow, Ui_MainWindow):
@@ -79,8 +76,11 @@ class MainWindows(QtWidgets.QMainWindow, Ui_MainWindow):
     def play_from_list(self):
         index = self.tableView.selectedIndexes()[0]
         file = self.listModel.get_path(index)
+
         self.set_path(file)
-        # play_pause(file)
+
+        self.mediaPlayer.set_path(file)
+        self.mediaPlayer.play_pause()
         self.load_info(file)
         self.btnEdit.clicked.connect(self.edit_tag)
 
