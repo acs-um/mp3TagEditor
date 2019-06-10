@@ -57,7 +57,6 @@ class MainWindows(QtWidgets.QMainWindow, Ui_MainWindow):
     def add_folder_to_list_action(self):
         dialog_txt = "Choose folder"
         folder = QFileDialog.getExistingDirectory(self, dialog_txt, AUDIO_PATH)
-        print(folder)
         self.add_folder_to_list(folder)
 
     def add_folder_to_list(self, folder):
