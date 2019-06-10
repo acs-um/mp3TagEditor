@@ -18,7 +18,7 @@ def test_division():
 def test_division_por_cero():
     calc = Calculadora()
     with pytest.raises(ZeroDivisionError):
-        calc.division(3,1)
+        calc.division(3,0)
 
 def test_multiplicacion():
     calc = Calculadora()
