@@ -13,7 +13,6 @@ from Source.table_models import ListFileModel, ListFile
 from PIL import Image, ImageQt
 
 # AUDIO_PATH = os.path.expanduser('~')
-AUDIO_PATH = os.path.expanduser('~/Documentos/Asesoramiento de la calidad/mp3TagEditor')
 
 
 class MainWindows(QtWidgets.QMainWindow, Ui_MainWindow):
