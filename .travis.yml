@@ -6,6 +6,8 @@ services:
   - xvfb
 env:
   - QT_QPA_PLATFORM: "offscreen"
+before_install:
+  - sudo apt-get install -y vlc
 install:
   - pip install pipenv
   - pipenv install --dev
