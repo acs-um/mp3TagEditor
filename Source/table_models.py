@@ -49,11 +49,3 @@ class ListFile:
 
     def __str__(self):
         return self.name
-
-    def __eq__(self, other):
-        if other.name > self.name:
-            return 1
-        if other.name < self.name:
-            return -1
-        else:
-            return 0
