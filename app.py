@@ -33,7 +33,7 @@ class MainWindows(QtWidgets.QMainWindow, Ui_MainWindow):
         self.tableView.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
         self.tableView.doubleClicked.connect(self.play_from_list)
         self.btnAddListMenu.triggered.connect(self.add_to_list_action)
-        self.btnAddFolderListMenu.triggered.connect(self.add_folder_to_list)
+        self.btnAddFolderListMenu.triggered.connect(self.add_folder_to_list_action)
         self.shortcut = QShortcut(QKeySequence("Delete"), self)
         self.shortcut.activated.connect(self.remove_from_list)
 
@@ -54,9 +54,12 @@ class MainWindows(QtWidgets.QMainWindow, Ui_MainWindow):
             index = self.tableView.selectedIndexes()[0]
             self.listModel.delete(index)
 
-    def add_folder_to_list(self):
+    def add_folder_to_list_action(self):
         dialog_txt = "Choose folder"
         folder = QFileDialog.getExistingDirectory(self, dialog_txt, AUDIO_PATH)
+        self.add_folder_to_list(folder)
+
+    def add_folder_to_list(self, folder):
         if folder:
             folder_list = os.listdir(folder)
             items = []
