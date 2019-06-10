@@ -1,12 +1,13 @@
-from PyQt5 import QtWidgets
+from PyQt5 import QtWidgets, QtCore
 
 import sys
 import os
 import eyed3
 import io
 
-from PyQt5.QtWidgets import QFileDialog, QHeaderView, QShortcut
+from PyQt5.QtWidgets import QFileDialog, QHeaderView, QShortcut, QDialog, QPushButton
 from PyQt5.QtGui import QPixmap, QKeySequence
+from PyQt5.QtCore import Qt
 from Source.mainWindows import Ui_MainWindow
 from Source.MediaPlayer import MediaPlayer
 from Source.table_models import ListFileModel, ListFile
@@ -25,7 +26,7 @@ class MainWindows(QtWidgets.QMainWindow, Ui_MainWindow):
         self.mediaPlayer.set_volume(self.volume)
         self.volumeSlider.setValue(self.volume)
         self.volumeSlider.valueChanged.connect(self.mediaPlayer.set_volume)
-        self.btnPlay.clicked.connect(self.mediaPlayer.play_pause)
+        self.btnPlay.clicked.connect(self.play_pause)
         self.btnStop.clicked.connect(self.mediaPlayer.stop)
         self.itemsList = []
         self.listModel = ListFileModel(self.itemsList, parent=self)
@@ -72,6 +73,19 @@ class MainWindows(QtWidgets.QMainWindow, Ui_MainWindow):
         self.mediaPlayer.play_pause()
         self.load_info(file)
 
+    def play_pause(self):
+        try:
+            self.play_from_list()
+        except IndexError:
+            if not self.listModel.rowCount():
+                self.add_to_list()
+            else:
+                self.show_dialog()
+
+    def show_dialog(self):
+        dialog = Dialog(self)
+        dialog.show()
+
     def load_info(self, file):
         audiofile = eyed3.load(file)
         audio = audiofile.tag
@@ -111,6 +125,17 @@ class MainWindows(QtWidgets.QMainWindow, Ui_MainWindow):
             self.imgCover.setPixmap(pixmap)
         else:
             self.imgCover.setPixmap(QPixmap(":/iconos/images/default_cover.png"))
+
+
+class Dialog(QDialog):
+    def __init__(self, *args, **kwargs):
+        super(Dialog, self).__init__(*args, **kwargs)
+        self.setWindowTitle("MP3 Editor - Reproducir")
+        self.setFixedSize(400, 200)
+        self.lblDialog = QtWidgets.QLabel(self)
+        self.lblDialog.setText("Debe seleccionar de la lista para poder reproducir")
+        self.btnAccept = QtWidgets.QPushButton(self)
+        self.btnAccept.setText("Aceptar")
 
 
 if __name__ == "__main__":
