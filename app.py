@@ -12,7 +12,7 @@ from Source.MediaPlayer import MediaPlayer
 from Source.table_models import ListFileModel, ListFile
 from PIL import Image, ImageQt
 
-# AUDIO_PATH = os.path.expanduser('~')
+AUDIO_PATH = os.path.expanduser('~')
 
 
 class MainWindows(QtWidgets.QMainWindow, Ui_MainWindow):

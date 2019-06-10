@@ -16,6 +16,5 @@ def test_add_folder(qtbot):
     widget = MainWindows()
     qtbot.addWidget(widget)
     folder = os.path.join(os.path.abspath("."), "tests/PlayListTests")
-    print(folder)
     widget.add_folder_to_list(folder)
     assert widget.listModel.rowCount() == 1
