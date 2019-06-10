@@ -1,15 +1,14 @@
 from PyQt5 import QtWidgets
 
-from Source.MediaPlayer import MediaPlayer
-from Source.mainWindows import Ui_MainWindow
 import sys
 import os
 import eyed3
 import io
 
-from PyQt5.QtWidgets import QMainWindow, QApplication, QFileDialog, QHeaderView, QShortcut
+from PyQt5.QtWidgets import QFileDialog, QHeaderView, QShortcut
 from PyQt5.QtGui import QPixmap, QKeySequence
 from Source.mainWindows import Ui_MainWindow
+from Source.MediaPlayer import MediaPlayer
 from Source.table_models import ListFileModel, ListFile
 from PIL import Image, ImageQt
 
@@ -73,7 +72,8 @@ class MainWindows(QtWidgets.QMainWindow, Ui_MainWindow):
     def play_from_list(self):
         index = self.tableView.selectedIndexes()[0]
         file = self.listModel.get_path(index)
-        # play_pause(file)
+        self.mediaPlayer.set_path(file)
+        self.mediaPlayer.play_pause()
         self.load_info(file)
 
     def load_info(self, file):
