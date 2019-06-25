@@ -2,14 +2,15 @@ import os
 
 from PyQt5 import QtWidgets
 from PyQt5.QtWidgets import QFileDialog
-from Source.table_models import ListFile, ListFileModel
+from Source.table_models import ListFile
 
 AUDIO_PATH = os.path.expanduser('~')
 
 
 class PlayList(QtWidgets.QMainWindow):
-    def __init__(self, *args, **kwargs):
+    def __init__(self, list_model, *args, **kwargs):
         QtWidgets.QMainWindow.__init__(self, *args, **kwargs)
+        self.listModel = list_model
 
     def add_to_list_action(self):
         dialog_txt = "Choose mp3 file"
@@ -46,9 +47,6 @@ class PlayList(QtWidgets.QMainWindow):
             self.listModel.items.extend(items)
             self.listModel.refresh()
 
-    def play_from_list(self):
-        index = self.tableView.selectedIndexes()[0]
-        file = self.listModel.get_path(index)
-        self.mediaPlayer.set_path(file)
-        self.mediaPlayer.play_pause()
-        self.load_info(file)
+    def get_path_from_list(self, index):
+        path = self.listModel.get_path(index)
+        return path

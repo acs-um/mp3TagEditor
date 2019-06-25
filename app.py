@@ -22,7 +22,6 @@ class MainWindows(QtWidgets.QMainWindow, Ui_MainWindow):
         QtWidgets.QMainWindow.__init__(self, *args, **kwargs)
         self.setupUi(self)
         self.volume = 80
-        self.playList = PlayList()
         self.mediaPlayer = MediaPlayer()
         self.mediaPlayer.set_volume(self.volume)
         self.volumeSlider.setValue(self.volume)
@@ -31,13 +30,21 @@ class MainWindows(QtWidgets.QMainWindow, Ui_MainWindow):
         self.btnStop.clicked.connect(self.mediaPlayer.stop)
         self.itemsList = []
         self.listModel = ListFileModel(self.itemsList, parent=self)
+        self.playList = PlayList(self.listModel)
         self.tableView.setModel(self.listModel)
         self.tableView.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
-        self.tableView.doubleClicked.connect(self.playList.play_from_list)
+        self.tableView.doubleClicked.connect(self.double_click)
         self.btnAddListMenu.triggered.connect(self.playList.add_to_list_action)
         self.btnAddFolderListMenu.triggered.connect(self.playList.add_folder_to_list_action)
         self.shortcut = QShortcut(QKeySequence("Delete"), self)
         self.shortcut.activated.connect(self.playList.remove_from_list)
+
+    def double_click(self):
+        index = self.tableView.selectedIndexes()[0]
+        path = self.playList.get_path_from_list(index)
+        self.mediaPlayer.set_path(path)
+        self.mediaPlayer.play_pause()
+        self.load_info(path)
 
     def load_info(self, file):
         audiofile = eyed3.load(file)
