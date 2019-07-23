@@ -1,0 +1,15 @@
+dist: xenial   # required for Python >= 3.7
+language: python
+python:
+  - "3.7"
+services:
+  - xvfb
+env:
+  - QT_QPA_PLATFORM: "offscreen"
+before_install:
+  - sudo apt-get install -y vlc
+install:
+  - pip install pipenv
+  - pipenv install --dev
+script:
+  - pytest -s
