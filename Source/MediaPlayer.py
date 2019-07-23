@@ -26,6 +26,21 @@ class MediaPlayer(QtWidgets.QMainWindow):
             self.is_paused = False
             self.is_play = True
 
+    def pause(self):
+        if not self.is_playing():
+            return
+        self.mediaplayer.pause()
+        self.is_paused = True
+        self.is_play = False
+
+    def play(self):
+        if self.mediaplayer.play() == -1:
+            self.media = self.instance.media_new(self.path)
+            self.mediaplayer.set_media(self.media)
+            self.mediaplayer.play()
+        self.is_paused = False
+        self.is_play = True
+
     def stop(self):
         self.mediaplayer.stop()
 
