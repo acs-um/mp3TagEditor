@@ -217,8 +217,8 @@ class Ui_MainWindow(object):
         self.lblComposer.setText(_translate("MainWindow", "Compositor"))
         self.lblGenre.setText(_translate("MainWindow", "Género"))
         self.lblComment.setText(_translate("MainWindow", "Comentario"))
-        self.btnEdit.setText(_translate("MainWindow", "PushButton"))
-        self.btnSave.setText(_translate("MainWindow", "PushButton"))
+        self.btnEdit.setText(_translate("MainWindow", "Editar"))
+        self.btnSave.setText(_translate("MainWindow", "Guardar"))
         self.lblTrack.setText(_translate("MainWindow", "Número de pista"))
         self.menuArchivo.setTitle(_translate("MainWindow", "Archivo"))
         self.menuSalir.setTitle(_translate("MainWindow", "About"))
@@ -229,4 +229,3 @@ class Ui_MainWindow(object):
 
 
 from . import images_rc
-
