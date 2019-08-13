@@ -1,19 +1,21 @@
-from PyQt5 import QtWidgets, QtCore
-
 import sys
 import os
-import eyed3
 import io
+import eyed3
 
-from PyQt5.QtWidgets import QFileDialog, QHeaderView, QShortcut, QDialog, QPushButton
+from PyQt5.QtWidgets import QDialog
+from Source.Tag import Tag
+from PyQt5.QtWidgets import QHeaderView, QShortcut
 from PyQt5.QtGui import QPixmap, QKeySequence
+from PyQt5 import QtWidgets
 from Source.mainWindows import Ui_MainWindow
 from Source.MediaPlayer import MediaPlayer
 from Source.PlayList import PlayList
 from Source.table_models import ListFileModel
 from PIL import Image, ImageQt
 
-AUDIO_PATH = os.path.expanduser('~')
+
+AUDIO_PATH = os.path.expanduser('~/Escritorio')
 
 
 class MainWindows(QtWidgets.QMainWindow, Ui_MainWindow):
@@ -23,6 +25,7 @@ class MainWindows(QtWidgets.QMainWindow, Ui_MainWindow):
         self.setupUi(self)
         self.volume = 80
         self.mediaPlayer = MediaPlayer()
+        self.tag = Tag()
         self.mediaPlayer.set_volume(self.volume)
         self.volumeSlider.setValue(self.volume)
         self.volumeSlider.valueChanged.connect(self.mediaPlayer.set_volume)
@@ -100,7 +103,6 @@ class MainWindows(QtWidgets.QMainWindow, Ui_MainWindow):
             self.imgCover.setPixmap(pixmap)
         else:
             self.imgCover.setPixmap(QPixmap(":/iconos/images/default_cover.png"))
-
 
 class Dialog(QDialog):
     def __init__(self, *args, **kwargs):
