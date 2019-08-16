@@ -1,114 +1,39 @@
 import eyed3
-import io
 from PyQt5 import QtWidgets
 from datetime import datetime
-from PIL import Image, ImageQt
-from PyQt5.QtGui import QPixmap
+from Source.AudioFile import AudioFile
 
 
 class Tag(QtWidgets.QMainWindow):
     def __init__(self, *args, **kwargs):
         QtWidgets.QMainWindow.__init__(self, *args, **kwargs)
 
-    def load_info(self, file):
-        audiofile = eyed3.load(file)
-        audio = audiofile.tag
-
-        self.titleEdit.setText(audio.title)
-        self.titleEdit.setReadOnly(True)
-        self.artistEdit.setText(audio.artist)
-        self.artistEdit.setReadOnly(True)
-        self.albumEdit.setText(audio.album)
-        self.albumEdit.setReadOnly(True)
-
-        try:
-            r_year = audio.recording_date.year
-            if r_year:
-                format_year = "{}".format(r_year)
-                self.yearEdit.setText(format_year)
-                self.yearEdit.setReadOnly(True)
-            else:
-                self.yearEdit.setText('')
-                self.yearEdit.setReadOnly(True)
-        except AttributeError:
-            self.yearEdit.setText('')
-
-        if audio.track_num[1]:
-            format_track = "{}/{}".format(audio.track_num[0], audio.track_num[1])
-        else:
-            format_track = "{}".format(audio.track_num[0])
-
-        self.trackEdit.setText(format_track)
-        self.trackEdit.setReadOnly(True)
-
-        format_genre = "{}".format(audio.genre)
-        genre = format_genre.split(")")[-1:][0]
-        self.genreEdit.setText(genre)
-        self.genreEdit.setReadOnly(True)
-
-        self.composerEdit.setText(audio.composer)
-        self.composerEdit.setReadOnly(True)
-
-        comment = audio.comments.get('description')
-        if comment:
-            self.commentEdit.setText(comment)
-
-        self.commentEdit.setReadOnly(True)
-
-        img_b = audio.images.get('')
-        if img_b:
-            image = Image.open(io.BytesIO(img_b.image_data))
-            q_img = ImageQt.ImageQt(image)
-            pixmap = QPixmap.fromImage(q_img)
-            self.imgCover.setPixmap(pixmap)
-        else:
-            self.imgCover.setPixmap(QPixmap(":/iconos/images/default_cover.png"))
-
-    def edit_tag(self):
-        self.titleEdit.setReadOnly(False)
-        self.artistEdit.setReadOnly(False)
-        self.albumEdit.setReadOnly(False)
-        self.yearEdit.setReadOnly(False)
-        self.trackEdit.setReadOnly(False)
-        self.genreEdit.setReadOnly(False)
-        self.composerEdit.setReadOnly(False)
-        self.commentEdit.setReadOnly(False)
-
-    def save_info(self):
-        path = self.mediaPlayer.get_path()
+    def get_audio_info(self, path):
         audio_file = eyed3.load(path)
-        audio = audio_file.tag
+        return audio_file.tag
 
-        audio.title = self.titleEdit.text()
-        self.titleEdit.setReadOnly(True)
+    def save_info(self, new_audio_file: AudioFile, audio_path):
+        audio_file = eyed3.load(audio_path)
+        old_audio = audio_file.tag
 
-        audio.album = self.albumEdit.text()
-        self.albumEdit.setReadOnly(True)
+        old_audio.title = new_audio_file.title
+        old_audio.album = new_audio_file.album
+        old_audio.artist = new_audio_file.artist
+        old_audio.composer = new_audio_file.composer
 
-        audio.artist = self.artistEdit.text()
-        self.artistEdit.setReadOnly(True)
-
-        audio.composer = self.composerEdit.text()
-        self.composerEdit.setReadOnly(True)
-
-        n_year = self.yearEdit.text()
-        audio.recording_date = datetime(int(n_year), 1, 1)
-        self.yearEdit.setReadOnly(True)
-
-        var = self.trackEdit.text().strip(" ")
+        n_year = new_audio_file.year
+        old_audio.recording_date = datetime(int(n_year), 1, 1)
+        var = new_audio_file.track_num.strip(" ")
         var2 = var.split("/")
         var2[0] = int(var2[0])
         var2[1] = int(var2[1])
         list2 = tuple(var2)
-        audio.track_num = list2
-        self.trackEdit.setReadOnly(True)
+        old_audio.track_num = list2
 
-        audio.genre = self.genreEdit.text()
-        self.genreEdit.setReadOnly(True)
+        old_audio.genre = new_audio_file.genre
 
-        # comment = self.commentEdit.toPlainText()
+        # comment = new_audio_file.comment.toPlainText()
         # print(comment)
-        # audio.comments = comment
-        # self.commentEdit.setReadOnly(True)
+        # old_audio.comments = comment
 
-        audio.save(self.mediaPlayer.get_path())
+        old_audio.save(audio_path)
